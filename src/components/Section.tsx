@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from 'react-native';
 
 type Props = {
   title: string;
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   title: {
-    textAlign: "center",
+    textAlign: 'center',
   },
   example: {
     marginTop: 8,

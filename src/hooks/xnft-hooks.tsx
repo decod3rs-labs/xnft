@@ -1,8 +1,8 @@
 import { AnchorProvider, Provider } from '@coral-xyz/anchor';
-import { Event, XnftMetadata } from "@coral-xyz/common-public";
-import { Connection, PublicKey } from "@solana/web3.js";
-import { useEffect, useState } from "react";
-import { XnftWallet } from "../types";
+import { Event, XnftMetadata } from '@coral-xyz/common-public';
+import { Connection, PublicKey } from '@solana/web3.js';
+import { useEffect, useState } from 'react';
+import { XnftWallet } from '../types';
 
 declare global {
   interface Window {
@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-export { useColorScheme } from "react-native";
+export { useColorScheme } from 'react-native';
 
 /** @deprecated use `usePublicKeys()` instead */
 export function usePublicKey(): PublicKey | undefined {
@@ -18,7 +18,7 @@ export function usePublicKey(): PublicKey | undefined {
   const [publicKey, setPublicKey] = useState();
   useEffect(() => {
     if (didLaunch) {
-      window.xnft.solana.on("publicKeyUpdate", () => {
+      window.xnft.solana.on('publicKeyUpdate', () => {
         setPublicKey(window.xnft.solana.publicKey);
       });
       setPublicKey(window.xnft.solana.publicKey);
@@ -27,12 +27,12 @@ export function usePublicKey(): PublicKey | undefined {
   return publicKey;
 }
 
-export function usePublicKeys(): { [key: string]: PublicKey }|undefined {
+export function usePublicKeys(): { [key: string]: PublicKey } | undefined {
   const didLaunch = useDidLaunch();
   const [publicKeys, setPublicKeys] = useState();
   useEffect(() => {
     if (didLaunch) {
-      window.xnft.on("publicKeysUpdate", () => {
+      window.xnft.on('publicKeysUpdate', () => {
         setPublicKeys(window.xnft.publicKeys);
       });
       setPublicKeys(window.xnft.publicKeys);
@@ -42,12 +42,12 @@ export function usePublicKeys(): { [key: string]: PublicKey }|undefined {
 }
 
 /** @deprecated use blockchain-specific connections instead */
-export function useConnection(): Connection|undefined {
+export function useConnection(): Connection | undefined {
   const didLaunch = useDidLaunch();
   const [connection, setConnection] = useState();
   useEffect(() => {
     if (didLaunch) {
-      window.xnft.solana.on("connectionUpdate", () => {
+      window.xnft.solana.on('connectionUpdate', () => {
         setConnection(window.xnft.solana.connection);
       });
       setConnection(window.xnft.solana.connection);
@@ -56,12 +56,12 @@ export function useConnection(): Connection|undefined {
   return connection;
 }
 
-export function useSolanaConnection(): Connection|undefined {
+export function useSolanaConnection(): Connection | undefined {
   const didLaunch = useDidLaunch();
   const [connection, setConnection] = useState();
   useEffect(() => {
     if (didLaunch) {
-      window.xnft.solana.on("connectionUpdate", () => {
+      window.xnft.solana.on('connectionUpdate', () => {
         setConnection(window.xnft.solana.connection);
       });
       setConnection(window.xnft.solana.connection);
@@ -70,12 +70,12 @@ export function useSolanaConnection(): Connection|undefined {
   return connection;
 }
 
-export function useEthereumConnection(): Connection|undefined {
+export function useEthereumConnection(): Connection | undefined {
   const didLaunch = useDidLaunch();
   const [connection, setConnection] = useState();
   useEffect(() => {
     if (didLaunch) {
-      window.xnft.ethereum?.on("connectionUpdate", () => {
+      window.xnft.ethereum?.on('connectionUpdate', () => {
         setConnection(window.xnft.ethereum.connection);
       });
       setConnection(window.xnft.ethereum.connection);
@@ -88,11 +88,11 @@ export function useEthereumConnection(): Connection|undefined {
 export function useDidLaunch() {
   const [didConnect, setDidConnect] = useState(!!window.xnft?.connection);
   useEffect(() => {
-    window.addEventListener("load", () => {
-      window.xnft.on("connect", () => {
+    window.addEventListener('load', () => {
+      window.xnft.on('connect', () => {
         setDidConnect(true);
       });
-      window.xnft.on("disconnect", () => {
+      window.xnft.on('disconnect', () => {
         setDidConnect(false);
       });
     });
@@ -102,14 +102,14 @@ export function useDidLaunch() {
 
 export const useReady = useDidLaunch;
 
-export function useMetadata(): XnftMetadata|undefined {
-  const didLaunch = useDidLaunch() 
+export function useMetadata(): XnftMetadata | undefined {
+  const didLaunch = useDidLaunch();
   const [metadata, setMetadata] = useState();
 
   useEffect(() => {
-    if(didLaunch) {
+    if (didLaunch) {
       setMetadata(window.xnft.metadata);
-      window.xnft.addListener("metadata", (event: Event) => {
+      window.xnft.addListener('metadata', (event: Event) => {
         setMetadata(event.data.metadata);
       });
     }
@@ -148,17 +148,17 @@ export function useDimensions(debounceMs = 0) {
       });
     });
 
-    window.addEventListener("resize", debouncedHandleResize);
+    window.addEventListener('resize', debouncedHandleResize);
 
     return () => {
-      window.removeEventListener("resize", debouncedHandleResize);
+      window.removeEventListener('resize', debouncedHandleResize);
     };
   }, []);
 
   return dimensions;
 }
 
-export function useSolanaProvider(): Provider|undefined {
+export function useSolanaProvider(): Provider | undefined {
   const connection = useSolanaConnection();
   const [provider, setProvider] = useState<Provider>();
 
@@ -166,8 +166,8 @@ export function useSolanaProvider(): Provider|undefined {
     if (connection) {
       setProvider(
         new AnchorProvider(
-          connection, 
-          new XnftWallet(window.xnft.solana), 
+          connection,
+          new XnftWallet(window.xnft.solana),
           AnchorProvider.defaultOptions()
         )
       );

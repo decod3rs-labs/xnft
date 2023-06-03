@@ -1,6 +1,5 @@
-import { Button, Text } from "react-native";
-
-import { useReducer } from "react";
+import { useReducer } from 'react';
+import { Button, Text } from 'react-native';
 
 enum Status {
   IDLE,
@@ -25,18 +24,18 @@ function reducer(state: State, action: Action) {
     case Status.SIGNING:
       return {
         status: Status.SIGNING,
-        buttonLabel: "signing...",
+        buttonLabel: 'signing...',
       };
     case Status.SIGNED:
       return {
         status: Status.SIGNED,
-        buttonLabel: "Sign another Message",
+        buttonLabel: 'Sign another Message',
         signature: action.signature,
       };
     case Status.ERROR:
       return {
         status: Status.ERROR,
-        buttonLabel: "Error Signing - Try again?",
+        buttonLabel: 'Error Signing - Try again?',
       };
     default:
       return state;
@@ -46,14 +45,14 @@ function reducer(state: State, action: Action) {
 export function SignMessageButton() {
   const [state, dispatch] = useReducer(reducer, {
     status: Status.IDLE,
-    buttonLabel: "Sign a Message",
+    buttonLabel: 'Sign a Message',
   });
 
   return (
     <>
       <Button
         title={state.buttonLabel}
-        color={state.status === Status.ERROR ? "red" : undefined}
+        color={state.status === Status.ERROR ? 'red' : undefined}
         onPress={() => {
           dispatch({ type: Status.SIGNING });
 
@@ -64,7 +63,7 @@ export function SignMessageButton() {
             .then((signature: Uint8Array) => {
               dispatch({
                 type: Status.SIGNED,
-                signature: Buffer.from(signature).toString("base64"),
+                signature: Buffer.from(signature).toString('base64'),
               });
             })
             .catch(() => {

@@ -1,4 +1,4 @@
-import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
